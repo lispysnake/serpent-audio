@@ -20,12 +20,47 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-module serpent.audio;
+module serpent.audio.track;
+
+import bindbc.sdl.mixer;
 
 /**
- * Audio Support for the Serpent Framework
+ * The AudioProcessor should be added to the main serpent.Context to
+ * allow the manipulation and rendering of audio
  */
+final class Track
+{
 
-public import serpent.audio.manager;
-public import serpent.audio.track;
-public import serpent.audio.processor;
+private:
+
+    Mix_Music* _music = null;
+    string _filename = null;
+
+public:
+
+    @disable this();
+
+    /**
+     * Construct a new Track from the given filename
+     */
+    this(string filename)
+    {
+        _filename = filename;
+        _music = Mix_LoadMUS(_filename.ptr);
+    }
+
+    ~this()
+    {
+        Mix_FreeMusic(_music);
+    }
+
+package:
+
+    /**
+     * Expose music object to the Manager
+     */
+    pure final @property Mix_Music* music() @safe @nogc nothrow
+    {
+        return _music;
+    }
+}
