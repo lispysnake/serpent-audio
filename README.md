@@ -8,3 +8,22 @@ Currently this is implemented using sdl-mixer - until such point as more work ha
 project to move to OpenAL.
 
 The current scope is simply to help further the milestones and add audio support to serpent-demo-paddle.
+
+
+## THIS IS A HACK
+
+Right now, we're only interesting in the MOST BASIC implementation to support the initial demos.
+As such, we'll use a simple OOPy wrapper around sdl-mixer.
+
+Eventually we're planning something like a full openal integration with SoundComponent per entity,
+Listeners attached to cameras, etc. For now, let's go hacky.
+
+### The Working TODO List
+
+- [ ] Remove SoundProcessor completely, it's not friendly to our needs **yet**
+- [ ] Add basic SoundManager object
+- [ ] Add basic SoundEffect object (audio.Clip)
+- [ ] Add basic SoundMusic object (audio.Track)
+- [ ] Allow playing ONE Track, multiple Clips
+- [ ] Add crossfades
+- [ ] Add impact sounds & menu sound
