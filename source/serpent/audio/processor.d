@@ -30,6 +30,8 @@ import bindbc.sdl.mixer;
 import std.exception : enforce;
 import std.format;
 
+static const int SdlBufferSize = 1024;
+
 /**
  * The AudioProcessor should be added to the main serpent.Context to
  * allow the manipulation and rendering of audio
@@ -48,10 +50,15 @@ public:
         auto status = Mix_Init(MIX_INIT_OGG);
         enforce(status == MIX_INIT_OGG, "Failed to initialise SDL_Mixer: %s".format(SDL_GetError()));
 
+        status = Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
+                MIX_DEFAULT_CHANNELS, SdlBufferSize);
+        enforce(status == 0, "Failed to open mixer audio: %s".format(SDL_GetError()));
+
     }
 
     final override void finish(View!ReadOnly view)
     {
+        Mix_CloseAudio();
         Mix_Quit();
     }
 
