@@ -39,6 +39,11 @@ static const int SdlBufferSize = 1024;
 final class AudioProcessor : Processor!ReadOnly
 {
 
+private:
+
+    Mix_Music* mus = null;
+    Mix_Chunk* chu = null;
+
 public:
 
     /**
@@ -54,10 +59,18 @@ public:
                 MIX_DEFAULT_CHANNELS, SdlBufferSize);
         enforce(status == 0, "Failed to open mixer audio: %s".format(SDL_GetError()));
 
+        mus = Mix_LoadMUS("assets/audio/MainLoop.ogg");
+        Mix_FadeInMusic(mus, -1, 3000);
+        Mix_VolumeMusic(20);
+
+        chu = Mix_LoadWAV("assets/audio/ping.ogg");
+        Mix_PlayChannel(-1, chu, 1);
     }
 
     final override void finish(View!ReadOnly view)
     {
+        Mix_FreeMusic(mus);
+        Mix_FreeChunk(chu);
         Mix_CloseAudio();
         Mix_Quit();
     }
