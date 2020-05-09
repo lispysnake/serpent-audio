@@ -26,4 +26,5 @@ module serpent.audio;
  * Audio Support for the Serpent Framework
  */
 
+public import serpent.audio.manager;
 public import serpent.audio.processor;
