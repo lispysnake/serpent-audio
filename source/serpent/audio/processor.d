@@ -24,7 +24,11 @@ module serpent.audio.processor;
 
 import serpent;
 
+import bindbc.sdl;
 import bindbc.sdl.mixer;
+
+import std.exception : enforce;
+import std.format;
 
 /**
  * The AudioProcessor should be added to the main serpent.Context to
@@ -36,14 +40,19 @@ final class AudioProcessor : Processor!ReadOnly
 public:
 
     /**
-     * Register relevant physics components
+     * Get the Mixer module initialised, primarily with OGG support until
+     * any other formats are needed.
      */
     final override void bootstrap(View!ReadOnly view)
     {
+        auto status = Mix_Init(MIX_INIT_OGG);
+        enforce(status == MIX_INIT_OGG, "Failed to initialise SDL_Mixer: %s".format(SDL_GetError()));
+
     }
 
     final override void finish(View!ReadOnly view)
     {
+        Mix_Quit();
     }
 
     /**
