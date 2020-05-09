@@ -20,10 +20,36 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-module serpent.audio;
+module serpent.audio.processor;
+
+import serpent;
+
+import bindbc.sdl.mixer;
 
 /**
- * Audio Support for the Serpent Framework
+ * The AudioProcessor should be added to the main serpent.Context to
+ * allow the manipulation and rendering of audio
  */
+final class AudioProcessor : Processor!ReadOnly
+{
 
-public import serpent.audio.processor;
+public:
+
+    /**
+     * Register relevant physics components
+     */
+    final override void bootstrap(View!ReadOnly view)
+    {
+    }
+
+    final override void finish(View!ReadOnly view)
+    {
+    }
+
+    /**
+     * Update for the current frame step
+     */
+    final override void run(View!ReadOnly view)
+    {
+    }
+}
