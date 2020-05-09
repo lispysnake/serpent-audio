@@ -102,6 +102,9 @@ public:
      */
     final void play(Clip clip) @trusted @nogc
     {
+        import std.math : round;
+
+        Mix_VolumeChunk(clip.chunk, cast(int) round(MIX_MAX_VOLUME * volumeFraction));
         Mix_PlayChannel(-1, clip.chunk, 0);
     }
 }
