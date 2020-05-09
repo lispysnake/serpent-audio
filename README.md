@@ -27,3 +27,4 @@ Listeners attached to cameras, etc. For now, let's go hacky.
 - [ ] Allow playing ONE Track, multiple Clips
 - [ ] Add crossfades
 - [ ] Add impact sounds & menu sound
+- [ ] Add volume settings to manager (0.0 to 1.0)
