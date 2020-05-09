@@ -23,6 +23,7 @@
 module serpent.audio.clip;
 
 import bindbc.sdl.mixer;
+import std.string : toStringz;
 
 /**
  * A Clip is a small sound effect that can be played continuously or
@@ -48,7 +49,7 @@ public:
     this(string filename)
     {
         _filename = filename;
-        _chunk = Mix_LoadWAV(_filename.ptr);
+        _chunk = Mix_LoadWAV(toStringz(_filename));
     }
 
     ~this()

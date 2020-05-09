@@ -23,6 +23,7 @@
 module serpent.audio.track;
 
 import bindbc.sdl.mixer;
+import std.string : toStringz;
 
 /**
  * Track provides background music capabilities in the audio processor
@@ -47,7 +48,7 @@ public:
     this(string filename)
     {
         _filename = filename;
-        _music = Mix_LoadMUS(_filename.ptr);
+        _music = Mix_LoadMUS(toStringz(filename));
     }
 
     ~this()

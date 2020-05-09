@@ -102,6 +102,6 @@ public:
      */
     final void play(Clip clip) @trusted @nogc
     {
-        Mix_PlayChannel(-1, clip.chunk, 1);
+        Mix_PlayChannel(-1, clip.chunk, 0);
     }
 }
