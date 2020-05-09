@@ -1,0 +1,19 @@
+{
+	"authors": [
+		"Lispy Snake, Ltd."
+	],
+	"copyright": "Copyright © 2019-2020 Lispy Snake, Ltd.",
+	"dependencies": {
+		"serpent": "~master",
+	},
+	"description": "Serpent Audio Support",
+	"libs": [
+		"SDL2_mixer",
+	],
+	"license": "ZLib",
+	"name": "serpent-audio",
+	"versions": [
+		"BindSDL_Mixer",
+	],
+	"targetType": "library",
+}
