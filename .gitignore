@@ -1,0 +1,22 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/serpent-audio
+serpent-audio.so
+serpent-audio.dylib
+serpent-audio.dll
+serpent-audio.a
+serpent-audio.lib
+serpent-audio-test-*
+*.exe
+*.o
+*.obj
+*.lst
+dub.selections.json
+
+# Linux specific
+libserpent-audio.a
+
+# Caused by autoformat
+*.d.orig
