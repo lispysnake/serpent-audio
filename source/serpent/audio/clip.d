@@ -20,13 +20,49 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-module serpent.audio;
+module serpent.audio.clip;
+
+import bindbc.sdl.mixer;
 
 /**
- * Audio Support for the Serpent Framework
+ * A Clip is a small sound effect that can be played continuously or
+ * a set number of times (i.e. once)
+ *
+ * Full background music should be handled by the Track instance.
  */
+final class Clip
+{
 
-public import serpent.audio.clip;
-public import serpent.audio.manager;
-public import serpent.audio.track;
-public import serpent.audio.processor;
+private:
+
+    Mix_Chunk* _chunk = null;
+    string _filename = null;
+
+public:
+
+    @disable this();
+
+    /**
+     * Construct a new Chunk from the given filename
+     */
+    this(string filename)
+    {
+        _filename = filename;
+        _chunk = Mix_LoadWAV(_filename.ptr);
+    }
+
+    ~this()
+    {
+        Mix_FreeChunk(_chunk);
+    }
+
+package:
+
+    /**
+     * Expose chunk object to the Manager
+     */
+    pure final @property Mix_Chunk* chunk() @safe @nogc nothrow
+    {
+        return _chunk;
+    }
+}

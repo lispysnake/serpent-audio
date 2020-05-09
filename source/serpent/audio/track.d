@@ -25,8 +25,9 @@ module serpent.audio.track;
 import bindbc.sdl.mixer;
 
 /**
- * The AudioProcessor should be added to the main serpent.Context to
- * allow the manipulation and rendering of audio
+ * Track provides background music capabilities in the audio processor
+ * Only one track may be played at a time, whereas multiple clips can
+ * be played in parallel to each other and the track
  */
 final class Track
 {
