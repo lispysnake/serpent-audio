@@ -30,6 +30,9 @@ import bindbc.sdl.mixer;
 import std.exception : enforce;
 import std.format;
 
+import serpent.audio.clip : Clip;
+import serpent.audio.track : Track;
+
 static const int SdlBufferSize = 1024;
 
 /**
@@ -84,5 +87,21 @@ public:
     final @property float trackVolume() @safe @nogc nothrow
     {
         return volumeFraction;
+    }
+
+    /**
+     * Play a track continuously
+     */
+    final void play(Track track) @trusted @nogc
+    {
+        Mix_PlayMusic(track.music, -1);
+    }
+
+    /**
+     * Play a clip once on any free channel
+     */
+    final void play(Clip clip) @trusted @nogc
+    {
+        Mix_PlayChannel(-1, clip.chunk, 1);
     }
 }
