@@ -29,4 +29,3 @@ module serpent.audio;
 public import serpent.audio.clip;
 public import serpent.audio.manager;
 public import serpent.audio.track;
-public import serpent.audio.processor;
