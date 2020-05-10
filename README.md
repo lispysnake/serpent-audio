@@ -20,11 +20,11 @@ Listeners attached to cameras, etc. For now, let's go hacky.
 
 ### The Working TODO List
 
-- [ ] Remove SoundProcessor completely, it's not friendly to our needs **yet**
-- [ ] Add basic SoundManager object
-- [ ] Add basic SoundEffect object (audio.Clip)
-- [ ] Add basic SoundMusic object (audio.Track)
-- [ ] Allow playing ONE Track, multiple Clips
+- [x] Remove SoundProcessor completely, it's not friendly to our needs **yet**
+- [x] Add basic SoundManager object
+- [x] Add basic SoundEffect object (audio.Clip)
+- [x] Add basic SoundMusic object (audio.Track)
+- [x] Allow playing ONE Track, multiple Clips
 - [ ] Add crossfades
 - [ ] Add impact sounds & menu sound
-- [ ] Add volume settings to manager (0.0 to 1.0)
+- [x] Add volume settings to manager (0.0 to 1.0)
