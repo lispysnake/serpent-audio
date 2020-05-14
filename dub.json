@@ -13,7 +13,7 @@
 	"license": "ZLib",
 	"name": "serpent-audio",
 	"versions": [
-		"BindSDL_Mixer",
+		"SDL_Mixer",
 	],
 	"targetType": "library",
 }
