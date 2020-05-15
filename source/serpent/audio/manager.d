@@ -47,6 +47,7 @@ final class AudioManager
 private:
 
     float volumeFraction = 1.0f;
+    float effectFraction = 1.0f;
 
 public:
 
@@ -84,9 +85,26 @@ public:
     /**
      * Return the track volume as a fraction between 0.0 and 1.0
      */
-    final @property float trackVolume() @safe @nogc nothrow
+    pure final @property float trackVolume() @safe @nogc nothrow
     {
         return volumeFraction;
+    }
+
+    /**
+     * Set the effect volume as a fraction between 0.0 and 1.0
+     */
+    pure final @property void effectVolume(float v) @safe @nogc
+    {
+        assert(v >= 0.0f && v <= 1.0f, "effectVolume should be between 0.0 and 1.0");
+        effectFraction = v;
+    }
+
+    /**
+     * Return the current effect volume as a fraction between 0.0 and 1.0
+     */
+    pure final @property float effectVolume() @safe @nogc nothrow
+    {
+        return effectFraction;
     }
 
     /**
@@ -104,7 +122,7 @@ public:
     {
         import std.math : round;
 
-        Mix_VolumeChunk(clip.chunk, cast(int) round(MIX_MAX_VOLUME * volumeFraction));
+        Mix_VolumeChunk(clip.chunk, cast(int) round(MIX_MAX_VOLUME * effectFraction));
         Mix_PlayChannel(-1, clip.chunk, 0);
     }
 }
