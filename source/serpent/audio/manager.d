@@ -35,6 +35,13 @@ import serpent.audio.track : Track;
 
 static const int SdlBufferSize = 1024;
 
+final enum PlayStatus
+{
+    Paused = 0,
+    Playing,
+    FadingToNext,
+}
+
 /**
  * The Manager is a super simple management mechanism for sdl-mixer
  * backed audio in basic demo games. It doesn't offer any advanced
@@ -48,6 +55,14 @@ private:
 
     float volumeFraction = 1.0f;
     float effectFraction = 1.0f;
+    int _crossFadeTime = 0;
+    Track nextTrack = null;
+    Track currentTrack = null;
+
+    /**
+     * Mini state machine
+     */
+    PlayStatus status = PlayStatus.Paused;
 
 public:
 
@@ -108,11 +123,29 @@ public:
     }
 
     /**
-     * Play a track continuously
+     * Return the cross fade time duration (ms)
+     */
+    pure final @property int crossFadeTime() @safe @nogc nothrow
+    {
+        return _crossFadeTime;
+    }
+
+    /**
+     * Set the time (ms) used to crossfade tracks
+     */
+    pure final @property void crossFadeTime(int time) @safe @nogc nothrow
+    {
+        assert(time >= 0, "Cannot have negative crossFadeTime");
+        _crossFadeTime = time;
+    }
+
+    /**
+     * Play a track continuously. It will not actually be played until
+     * update is called
      */
     final void play(Track track) @trusted @nogc
     {
-        Mix_PlayMusic(track.music, -1);
+        nextTrack = track;
     }
 
     /**
@@ -124,5 +157,75 @@ public:
 
         Mix_VolumeChunk(clip.chunk, cast(int) round(MIX_MAX_VOLUME * effectFraction));
         Mix_PlayChannel(-1, clip.chunk, 0);
+    }
+
+    /**
+     * Attempt to start playback of a track
+     */
+    final void beginPlay(Track tr) @trusted @nogc
+    {
+        currentTrack = tr;
+        nextTrack = null;
+
+        if (tr is null)
+        {
+            status = PlayStatus.Paused;
+            return;
+        }
+
+        status = PlayStatus.Playing;
+        if (crossFadeTime < 1)
+        {
+            Mix_PlayMusic(tr.music, -1);
+            return;
+        }
+        Mix_FadeInMusic(tr.music, -1, crossFadeTime);
+    }
+
+    /**
+     * Attempt to end playback of a track
+     */
+    final void beginStop(Track tr) @trusted @nogc
+    {
+        if (crossFadeTime < 1)
+        {
+            status = PlayStatus.Paused;
+            Mix_HaltMusic();
+            currentTrack = null;
+            return;
+        }
+        status = PlayStatus.FadingToNext;
+        Mix_FadeOutMusic(crossFadeTime);
+    }
+
+    /**
+     * Called by the owner to ensure cross-fades happen
+     */
+    final void update() @trusted @nogc
+    {
+        final switch (status)
+        {
+        case PlayStatus.Paused:
+            if (nextTrack !is null)
+            {
+                beginPlay(nextTrack);
+            }
+            break;
+        case PlayStatus.Playing:
+            if (nextTrack !is null)
+            {
+                beginStop(currentTrack);
+                status = PlayStatus.FadingToNext;
+            }
+            break;
+        case PlayStatus.FadingToNext:
+            if (Mix_PlayingMusic() == 1)
+            {
+                return;
+            }
+            currentTrack = null;
+            beginPlay(nextTrack);
+            break;
+        }
     }
 }
