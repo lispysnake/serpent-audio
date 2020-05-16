@@ -25,6 +25,6 @@ Listeners attached to cameras, etc. For now, let's go hacky.
 - [x] Add basic SoundEffect object (audio.Clip)
 - [x] Add basic SoundMusic object (audio.Track)
 - [x] Allow playing ONE Track, multiple Clips
-- [ ] Add crossfades
-- [ ] Add impact sounds & menu sound
+- [x] Add crossfades
+- [x] Add impact sounds & menu sound
 - [x] Add volume settings to manager (0.0 to 1.0)
